@@ -81,10 +81,6 @@ private static final String USER = "root";
 private static final String PASSWORD = "YOUR_MYSQL_PASSWORD";
 ```
 
-Replace `YOUR_MYSQL_PASSWORD` with your **local** MySQL password.
-
-⚠️ **Never commit your real database password to GitHub.** For a classroom/local run, keep your credentials local and use a safer environment-variable configuration if the project is deployed.
-
 ## ▶️ Run with Maven
 
 From the project root:
@@ -166,7 +162,7 @@ MySQL students table
 
 ## 📸 Output Preview
 
-The repository contains six **sample output previews** showing the expected console flow:
+The repository contains six sample output previews:
 
 ### Main Menu
 ![Main Menu](screenshots/01-main-menu.svg)
@@ -185,8 +181,6 @@ The repository contains six **sample output previews** showing the expected cons
 
 ### Delete Student
 ![Delete Student](screenshots/06-delete-student.svg)
-
-> These are **output previews**, not claims of a run on the repository owner's computer. For a final college submission, they can be replaced with screenshots captured from the locally running application.
 
 ## 📌 Expected Test Flow
 

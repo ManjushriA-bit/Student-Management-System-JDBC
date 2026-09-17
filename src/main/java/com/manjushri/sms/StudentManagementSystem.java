@@ -89,7 +89,9 @@ public class StudentManagementSystem {
             return;
         }
 
-        System.out.println("Enter new details:");
+        System.out.println("Current details:");
+        printStudent(existing);
+        System.out.println("\nEnter new details:");
         Student updated = readStudentDetails();
         updated.setId(id);
         if (dao.updateStudent(updated)) {
@@ -106,6 +108,7 @@ public class StudentManagementSystem {
             return;
         }
 
+        System.out.println("Student: " + existing.getName() + " (ID: " + id + ")");
         System.out.print("Are you sure you want to delete this student? (yes/no): ");
         String confirmation = scanner.nextLine().trim();
         if (confirmation.equalsIgnoreCase("yes")) {
@@ -118,17 +121,54 @@ public class StudentManagementSystem {
     }
 
     private static Student readStudentDetails() {
-        System.out.print("Name: ");
-        String name = scanner.nextLine().trim();
-        System.out.print("Email: ");
-        String email = scanner.nextLine().trim();
-        System.out.print("Department: ");
-        String department = scanner.nextLine().trim();
-        System.out.print("Phone: ");
-        String phone = scanner.nextLine().trim();
-        int semester = readInt("Semester (1-8): ");
-        double cgpa = readDouble("CGPA (0-10): ");
+        String name = readNonEmpty("Name: ");
+        String email = readNonEmpty("Email: ");
+        String department = readNonEmpty("Department: ");
+        String phone = readNonEmpty("Phone: ");
+        int semester = readIntInRange("Semester (1-8): ", 1, 8);
+        double cgpa = readDoubleInRange("CGPA (0-10): ", 0, 10);
         return new Student(name, email, department, phone, semester, cgpa);
+    }
+
+    private static String readNonEmpty(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String value = scanner.nextLine().trim();
+            if (!value.isEmpty()) return value;
+            System.out.println("This field cannot be empty.");
+        }
+    }
+
+    private static int readInt(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid integer.");
+            }
+        }
+    }
+
+    private static int readIntInRange(String prompt, int min, int max) {
+        while (true) {
+            int value = readInt(prompt);
+            if (value >= min && value <= max) return value;
+            System.out.println("Please enter a value between " + min + " and " + max + ".");
+        }
+    }
+
+    private static double readDoubleInRange(String prompt, double min, double max) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                double value = Double.parseDouble(scanner.nextLine().trim());
+                if (value >= min && value <= max) return value;
+                System.out.println("Please enter a value between " + min + " and " + max + ".");
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
     }
 
     private static void printStudent(Student s) {
@@ -141,33 +181,5 @@ public class StudentManagementSystem {
         System.out.println("Phone      : " + s.getPhone());
         System.out.println("Semester   : " + s.getSemester());
         System.out.printf("CGPA       : %.2f%n", s.getCgpa());
-    }
-
-    private static int readInt(String prompt) {
-        while (true) {
-            try {
-                System.out.print(prompt);
-                int value = Integer.parseInt(scanner.nextLine().trim());
-                return value;
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid integer.");
-            }
-        }
-    }
-
-    private static double readDouble(String prompt) {
-        while (true) {
-            try {
-                System.out.print(prompt);
-                double value = Double.parseDouble(scanner.nextLine().trim());
-                if (value < 0 || value > 10) {
-                    System.out.println("CGPA must be between 0 and 10.");
-                    continue;
-                }
-                return value;
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
-            }
-        }
     }
 }

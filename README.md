@@ -1,28 +1,32 @@
-# Student Management System using JDBC
+# 🎓 Student Management System using JDBC
 
-A simple **Student Management System** developed in Java using **JDBC** and **MySQL**. This project demonstrates database connectivity and CRUD operations through a clean console-based application.
+A clean, beginner-friendly **Student Management System** built with **Java, JDBC, MySQL and Maven**. The project demonstrates how a Java application connects to a relational database and performs complete CRUD operations.
 
-## Features
+> **Academic Assignment — Module 3**
 
-- Add a student
-- View all students
-- Search a student by ID
-- Update student details
-- Delete a student with confirmation
-- Input validation for integer and CGPA values
-- `PreparedStatement` for parameterized SQL queries
-- Try-with-resources for automatic JDBC resource closing
+## ✨ Features
 
-## Technologies Used
+- ➕ Add a student
+- 👀 View all students
+- 🔍 Search student by ID
+- ✏️ Update student details
+- 🗑️ Delete student with confirmation
+- ✅ Input validation for semester and CGPA
+- 🔐 `PreparedStatement` for parameterized SQL
+- ♻️ Try-with-resources for safe JDBC resource handling
+- 🧩 DAO pattern for separating database logic from the console UI
+
+## 🛠️ Technologies Used
 
 | Technology | Purpose |
 |---|---|
-| Java | Application logic |
-| JDBC | Java-to-database connectivity |
-| MySQL | Student data storage |
+| Java 17+ | Application logic |
+| JDBC | Java-to-MySQL connectivity |
+| MySQL | Database |
 | Maven | Dependency management and build |
+| Eclipse / IntelliJ / VS Code | Development |
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 Student-Management-System-JDBC/
@@ -34,37 +38,54 @@ Student-Management-System-JDBC/
 ├── database/
 │   └── student_management.sql
 ├── screenshots/
+│   ├── 01-main-menu.svg
+│   ├── 02-add-student.svg
+│   ├── 03-view-students.svg
+│   ├── 04-search-student.svg
+│   ├── 05-update-student.svg
+│   ├── 06-delete-student.svg
+│   └── README.md
 ├── pom.xml
 ├── README.md
 └── .gitignore
 ```
 
-## Database Setup
+## 🗄️ Database Setup
 
-1. Install and start MySQL Server.
+1. Install and start **MySQL Server**.
 2. Open MySQL Workbench or the MySQL command line.
-3. Run `database/student_management.sql`.
-4. The script creates the `student_management` database and `students` table and inserts optional sample records.
+3. Open `database/student_management.sql` from this project.
+4. Execute the script.
+5. It creates the `student_management` database, the `students` table, and sample records.
 
-## Configure Database Password
+The table contains:
+
+```text
+id | name | email | department | phone | semester | cgpa
+```
+
+The sample insert uses `INSERT IGNORE`, so the same sample email records can safely be encountered again without creating duplicate rows.
+
+## 🔐 Configure Database Credentials
 
 Open:
 
-`src/main/java/com/manjushri/sms/DBConnection.java`
+```text
+src/main/java/com/manjushri/sms/DBConnection.java
+```
 
-Change:
+Set your local MySQL credentials:
 
 ```java
+private static final String USER = "root";
 private static final String PASSWORD = "YOUR_MYSQL_PASSWORD";
 ```
 
-to your local MySQL password. Do not commit a real password to GitHub.
+Replace `YOUR_MYSQL_PASSWORD` with your **local** MySQL password.
 
-If your MySQL username is not `root`, also change the `USER` value.
+⚠️ **Never commit your real database password to GitHub.** For a classroom/local run, keep your credentials local and use a safer environment-variable configuration if the project is deployed.
 
-## Run with Maven
-
-Make sure Java 17+ and Maven are installed.
+## ▶️ Run with Maven
 
 From the project root:
 
@@ -73,13 +94,20 @@ mvn clean compile
 mvn exec:java
 ```
 
-## Run from an IDE
+The Maven project includes the MySQL Connector/J dependency, so Maven downloads the JDBC driver automatically.
 
-Open the project in IntelliJ IDEA, Eclipse, or VS Code, allow Maven to download dependencies, configure the database credentials, and run:
+## ▶️ Run from an IDE
 
-`StudentManagementSystem.java`
+1. Import the project as an **Existing Maven Project**.
+2. Wait for Maven dependencies to finish downloading.
+3. Configure the MySQL username/password in `DBConnection.java` locally.
+4. Run:
 
-## Application Menu
+```text
+StudentManagementSystem.java
+```
+
+## 🖥️ Application Menu
 
 ```text
 ==============================================
@@ -96,18 +124,7 @@ Open the project in IntelliJ IDEA, Eclipse, or VS Code, allow Maven to download 
 -------------------------------------
 ```
 
-## JDBC Concepts Demonstrated
-
-- `DriverManager.getConnection()` to establish a connection
-- `Connection` for communication with MySQL
-- `PreparedStatement` for executing parameterized SQL
-- `ResultSet` for reading query results
-- `executeUpdate()` for INSERT, UPDATE, and DELETE
-- `executeQuery()` for SELECT operations
-- Try-with-resources for safe resource management
-- DAO pattern to keep database operations separate from the user interface
-
-## CRUD Flow
+## 🔄 CRUD Flow
 
 ```text
 User
@@ -121,21 +138,71 @@ JDBC / PreparedStatement
 MySQL students table
 ```
 
-## Sample Data
+### Add
+`INSERT INTO students ...`
 
-The SQL file contains three optional sample students so the View and Search operations can be tested immediately.
+### View
+`SELECT * FROM students ...`
 
-## Screenshots
+### Search
+`SELECT * FROM students WHERE id = ?`
 
-Add screenshots of the running application in the `screenshots/` folder for the assignment submission. Suggested screenshots:
+### Update
+`UPDATE students SET ... WHERE id = ?`
 
-1. Main menu
-2. Add student success
-3. View all students
-4. Search student
-5. Update student success
-6. Delete student success
+### Delete
+`DELETE FROM students WHERE id = ?`
 
-## Academic Note
+## 🧠 JDBC Concepts Demonstrated
 
-This project was created as a Module 3 assignment demonstrating a **Student Management System using JDBC**.
+- `DriverManager.getConnection()` — establishes the database connection
+- `Connection` — communicates with MySQL
+- `PreparedStatement` — executes parameterized SQL safely
+- `ResultSet` — reads data returned by SELECT queries
+- `executeUpdate()` — handles INSERT, UPDATE and DELETE
+- `executeQuery()` — handles SELECT
+- Try-with-resources — closes JDBC resources automatically
+- DAO pattern — separates database operations from UI logic
+
+## 📸 Output Preview
+
+The repository contains six **sample output previews** showing the expected console flow:
+
+### Main Menu
+![Main Menu](screenshots/01-main-menu.svg)
+
+### Add Student
+![Add Student](screenshots/02-add-student.svg)
+
+### View All Students
+![View Students](screenshots/03-view-students.svg)
+
+### Search Student
+![Search Student](screenshots/04-search-student.svg)
+
+### Update Student
+![Update Student](screenshots/05-update-student.svg)
+
+### Delete Student
+![Delete Student](screenshots/06-delete-student.svg)
+
+> These are **output previews**, not claims of a run on the repository owner's computer. For a final college submission, they can be replaced with screenshots captured from the locally running application.
+
+## 📌 Expected Test Flow
+
+Use the sample database records to test **View** and **Search** first. Then test the complete CRUD flow:
+
+```text
+1 → Add Student
+2 → View All Students
+3 → Search Student by ID
+4 → Update Student
+5 → Delete Student
+6 → Exit
+```
+
+## 🎓 Academic Note
+
+This project was created for a **Module 3 assignment: Create a Student Management System using JDBC**.
+
+**Repository:** Student-Management-System-JDBC

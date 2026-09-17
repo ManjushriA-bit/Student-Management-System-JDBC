@@ -1,0 +1,20 @@
+# Maven
+ target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Java compiled files
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local configuration / secrets
+.env

@@ -8,11 +8,11 @@ CREATE TABLE IF NOT EXISTS students (
     department VARCHAR(100) NOT NULL,
     phone VARCHAR(15),
     semester INT NOT NULL,
-    cgpa DECIMAL(3,2) NOT NULL
+    cgpa DECIMAL(4,2) NOT NULL
 );
 
--- Sample records for testing (optional)
-INSERT INTO students (name, email, department, phone, semester, cgpa)
+-- Sample records for testing (safe to run more than once)
+INSERT IGNORE INTO students (name, email, department, phone, semester, cgpa)
 VALUES
 ('Ananya Sharma', 'ananya@example.com', 'Computer Science', '9876543210', 5, 8.70),
 ('Rahul Kumar', 'rahul@example.com', 'Information Science', '9876501234', 5, 8.20),
